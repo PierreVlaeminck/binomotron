@@ -11,6 +11,7 @@ public class Main {
         String driver = "com.mysql.jdbc.Driver";
         String url = "jdbc:mysql://localhost:8082/binomotron";
         String requete = "";
+        //Connection a la BDD binomotron
 
         String ls = System.lineSeparator();
         Connection con = null;
@@ -24,22 +25,27 @@ public class Main {
             st = con.createStatement();
             //Requete de récuperation dans la table apprenants
             list_app = st.executeQuery("SELECT * FROM apprenants");
+            //Création de la liste vide rdm_liste
             List<String> rdm_liste = new ArrayList<>();
 
             while (list_app.next()) {
+                //Ajout des informations venant de la BDD dans la liste rdm_liste
                 rdm_liste.add(list_app.getString("nom") + " " + list_app.getString("prenom"));
+                //rdm_liste.add(list_app.getString("nom") + " " + list_app.getString("prenom") + " " + list_app.getString("mail"));
             }
 
-            //while(list_app.next()){
-            //System.out.println(list_app.getString("nom") + " " + list_app.getString("prenom"));
+            while(list_app.next()){
+            System.out.println(list_app.getString("nom") + " " + list_app.getString("prenom"));
             //Affiche la liste récuperé dans la BDD.
             // + " " + = ajout espace lors d'une concatenation de mots.
-            //}
+
+            }
 
             Collections.shuffle(rdm_liste); //Mélangez les éléments de la liste.
             System.out.println(rdm_liste); //Affiche la liste mélanger.
 
             int num_groupes = 1;
+            //Déclare le premier numéro de groupe à 1
 
             for (int i = 0; i < rdm_liste.size(); i++) {
                 List<String> list_groupes = new ArrayList<>();
@@ -53,6 +59,7 @@ public class Main {
 
                 System.out.println("groupes :" + " " + (num_groupes) + " " + list_groupes);
                 num_groupes++;
+                //Incrémentation automatique des numéros de groupes
                 //Affichage des numéros de groupes dans la console via num_groupes
             }
 
@@ -65,7 +72,6 @@ public class Main {
                 //if(rs2 != null) rs2.close();
                 if (st != null) st.close();
                 if (con != null) con.close();
-                //Ferme la connection a la base de donnée
             } catch (Exception e) {
             }
         }
